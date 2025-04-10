@@ -5,30 +5,30 @@ import { UpdateMateriaDto } from './dto/update-materia.dto';
 
 @Controller('materia')
 export class MateriaController {
-  constructor(private readonly materiaService: MateriaService) {}
+  constructor(private readonly materiaService: MateriaService) { }
 
   @Post()
-  create(@Body() createMateriaDto: CreateMateriaDto) {
-    return this.materiaService.create(createMateriaDto);
+  async create(@Body() createMateriaDto: CreateMateriaDto) {
+    return await this.materiaService.create(createMateriaDto);
   }
 
   @Get()
-  findAll() {
-    return this.materiaService.findAll();
+  async findAll() {
+    return await this.materiaService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.materiaService.findOne(+id);
+  @Get(':materia')
+  async findOne(@Param('materia') materia: string) {
+    return await this.materiaService.findOne(materia);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMateriaDto: UpdateMateriaDto) {
-    return this.materiaService.update(+id, updateMateriaDto);
+  @Patch(':materia')
+  async update(@Param('materia') materia: string, @Body() updateMateriaDto: UpdateMateriaDto) {
+    return this.materiaService.update(materia, updateMateriaDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.materiaService.remove(+id);
+  @Delete(':materia')
+  async remove(@Param('materia') materia: string) {
+    return await this.materiaService.remove(materia);
   }
 }

@@ -7,14 +7,18 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from "typ
 export class HorarioClase {
 
     @PrimaryColumn()
+    nombre_materia: string
+
     @ManyToOne(() => Materia, (materia) => materia.nombre_materia)
     @JoinColumn({ name: 'nombre_materia' })
-    nombre_materia: Materia
+    materia: Materia
 
     @PrimaryColumn()
+    nombre_aula: string
+
     @ManyToOne(() => Aula, (aula) => aula.nombre)
     @JoinColumn({ name: 'nombre_aula' })
-    nombre_aula: Aula
+    aula: Aula
 
     @PrimaryColumn()
     @Column({ type: 'date' })

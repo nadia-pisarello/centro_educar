@@ -53,6 +53,6 @@ export class PersonaRolService {
     if (!persona_rol) {
       throw new Error('El rol no existe para esa persona')
     }
-    await this.personaRolRepository.delete(persona_rol);
+    await this.personaRolRepository.delete({ dni_persona: dni, id_rol: id });
   }
 }

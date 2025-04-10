@@ -5,30 +5,29 @@ import { UpdateHorarioClaseDto } from './dto/update-horario_clase.dto';
 
 @Controller('horario-clase')
 export class HorarioClaseController {
-  constructor(private readonly horarioClaseService: HorarioClaseService) {}
+  constructor(private readonly horarioClaseService: HorarioClaseService) { }
 
   @Post()
-  create(@Body() createHorarioClaseDto: CreateHorarioClaseDto) {
-    return this.horarioClaseService.create(createHorarioClaseDto);
+  async create(@Body() createHorarioClaseDto: CreateHorarioClaseDto) {
+    return await this.horarioClaseService.asignarNuevoHorario(createHorarioClaseDto);
   }
 
   @Get()
-  findAll() {
-    return this.horarioClaseService.findAll();
+  async findAll() {
+    return await this.horarioClaseService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.horarioClaseService.findOne(+id);
+  @Get(':materia/:aula')
+  async findOne(
+    @Param('materia') materia: string,
+    @Param('aula') aula: string) {
+    return await this.horarioClaseService.findOne(materia, aula);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHorarioClaseDto: UpdateHorarioClaseDto) {
-    return this.horarioClaseService.update(+id, updateHorarioClaseDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.horarioClaseService.remove(+id);
+  @Delete(':materia/:aula')
+  async remove(
+    @Param('materia') materia: string,
+    @Param('aula') aula: string) {
+    return await this.horarioClaseService.remove(materia, aula);
   }
 }

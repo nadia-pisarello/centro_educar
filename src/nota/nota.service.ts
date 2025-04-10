@@ -1,26 +1,60 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNotaDto } from './dto/create-nota.dto';
 import { UpdateNotaDto } from './dto/update-nota.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Nota } from './entities/nota.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class NotaService {
-  create(createNotaDto: CreateNotaDto) {
-    return 'This action adds a new nota';
+  constructor(
+    @InjectRepository(Nota)
+    private readonly notaRepository: Repository<Nota>
+  ) { }
+
+  async asignarNota(createNotaDto: CreateNotaDto): Promise<Nota> {
+    const nota = await this.notaRepository.findOneBy({
+      nombre_materia: createNotaDto.nombre_materia,
+      trimestre: createNotaDto.trimestre
+    })
+    if (nota) {
+      throw new BadRequestException('Nota ya asignada')
+    }
+    const nuevaNota = this.notaRepository.create(nota)
+    return await this.notaRepository.save(nuevaNota);
   }
 
-  findAll() {
-    return `This action returns all nota`;
+  async findAll(): Promise<Nota[]> {
+    return await this.notaRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} nota`;
+  async findOne(nombre_materia: string, trimestre: number): Promise<Nota> {
+    const nota = await this.notaRepository.findOneBy({
+      nombre_materia, trimestre
+    })
+    if (!nota) {
+      throw new NotFoundException('Nota no encontrada')
+    }
+    return nota;
   }
 
-  update(id: number, updateNotaDto: UpdateNotaDto) {
-    return `This action updates a #${id} nota`;
+  async update(nombre_materia: string, trimestre: number, updateNotaDto: UpdateNotaDto): Promise<void> {
+    const nota = await this.notaRepository.findOneBy({
+      nombre_materia, trimestre
+    })
+    if (!nota) {
+      throw new NotFoundException('Nota no encontrada')
+    }
+    await this.notaRepository.update({ nombre_materia, trimestre }, updateNotaDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} nota`;
+  async remove(nombre_materia: string, trimestre: number): Promise<void> {
+    const nota = await this.notaRepository.findOneBy({
+      nombre_materia, trimestre
+    })
+    if (!nota) {
+      throw new NotFoundException('Nota no encontrada')
+    }
+    await this.notaRepository.delete({ nombre_materia, trimestre });
   }
 }

@@ -30,10 +30,6 @@ export class PersonaService {
     return await this.personaRepository.save(nuevaPersona);
   }
 
-  // async findAll(): Promise<Persona[]> {
-  //   return await this.personaRepository.find();
-  // }
-
   async findAll(): Promise<UpdatePersonaDto[]> {
     const usuarios = await this.personaRepository.find()
     return usuarios.map(({ password, ...data }) => data as UpdatePersonaDto)

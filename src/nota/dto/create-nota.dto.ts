@@ -1,15 +1,16 @@
-import { IsNotEmpty, IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateNotaDto {
 
     @IsNotEmpty()
-    @IsNumber()
-    nota: number
-
-    @IsNotEmpty()
+    @IsString()
     nombre_materia: string
 
     @IsNotEmpty()
     @IsNumber()
     trimestre: number
+
+    @IsNotEmpty()
+    @IsNumber()
+    nota: number
 }

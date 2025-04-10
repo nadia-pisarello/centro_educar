@@ -11,8 +11,8 @@ export class Alumno {
     @PrimaryColumn()
     legajo: number
 
-    @OneToOne(() => Persona, (persona) => persona.dni)
-    @JoinColumn()
+    @OneToOne(() => Persona)
+    @JoinColumn({ name: 'dni_alumno', referencedColumnName: 'dni' })
     persona: Persona
 
     @OneToMany(() => Factura, (factura) => factura.alumno)

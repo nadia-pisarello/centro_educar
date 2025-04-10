@@ -1,26 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMateriaDto } from './dto/create-materia.dto';
 import { UpdateMateriaDto } from './dto/update-materia.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Materia } from './entities/materia.entity';
+import { Not, Repository } from 'typeorm';
 
 @Injectable()
 export class MateriaService {
-  create(createMateriaDto: CreateMateriaDto) {
-    return 'This action adds a new materia';
+  constructor(
+    @InjectRepository(Materia)
+    private readonly materiaRepository: Repository<Materia>
+  ) { }
+
+  async create(createMateriaDto: CreateMateriaDto): Promise<Materia> {
+    const materia = await this.materiaRepository.findOneBy({ nombre_materia: createMateriaDto.nombre_materia })
+    if (materia) {
+      throw new BadRequestException('Esta materia ya existe')
+    }
+    const nuevaMateria = this.materiaRepository.create(materia)
+    return await this.materiaRepository.save(nuevaMateria);
   }
 
-  findAll() {
-    return `This action returns all materia`;
+  async findAll(): Promise<Materia[]> {
+    return await this.materiaRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} materia`;
+  async findOne(nombre_materia: string): Promise<Materia> {
+    const materia = await this.materiaRepository.findOneBy({ nombre_materia })
+    if (!materia) {
+      throw new NotFoundException('Materia no encontrada')
+    }
+    return materia;
   }
 
-  update(id: number, updateMateriaDto: UpdateMateriaDto) {
-    return `This action updates a #${id} materia`;
+  async update(nombre_materia: string, updateMateriaDto: UpdateMateriaDto): Promise<void> {
+    const materia = await this.materiaRepository.findOneBy({ nombre_materia })
+    if (!materia) {
+      throw new NotFoundException('Materia no encontrada')
+    }
+    await this.materiaRepository.update(nombre_materia, updateMateriaDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} materia`;
+  async remove(nombre_materia: string): Promise<void> {
+    const materia = await this.materiaRepository.findOneBy({ nombre_materia })
+    if (!materia) {
+      throw new NotFoundException('Materia no encontrada')
+    }
+    await this.materiaRepository.delete(nombre_materia);
   }
 }

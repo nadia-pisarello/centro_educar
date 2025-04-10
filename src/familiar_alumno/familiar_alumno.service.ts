@@ -69,6 +69,9 @@ export class FamiliarAlumnoService {
     if (!fm) {
       throw new NotFoundException('La relación no existe')
     }
-    await this.fmRepository.delete(fm);
+    await this.fmRepository.delete({
+      dni_familiar: dni_f,
+      dni_alumno: dni_a
+    });
   }
 }

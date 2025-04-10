@@ -13,7 +13,7 @@ export class Factura {
     @Column({ type: 'date' })
     fecha_emision: string
 
-    @ManyToOne(() => Alumno, (alumno) => alumno.dni_alumno)
+    @ManyToOne(() => Alumno, (alumno) => alumno.facturas)
     @JoinColumn({ name: 'dni_alumno' })
     alumno: Alumno
 }

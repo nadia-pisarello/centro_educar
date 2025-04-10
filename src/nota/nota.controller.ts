@@ -5,30 +5,37 @@ import { UpdateNotaDto } from './dto/update-nota.dto';
 
 @Controller('nota')
 export class NotaController {
-  constructor(private readonly notaService: NotaService) {}
+  constructor(private readonly notaService: NotaService) { }
 
   @Post()
-  create(@Body() createNotaDto: CreateNotaDto) {
-    return this.notaService.create(createNotaDto);
+  async create(@Body() createNotaDto: CreateNotaDto) {
+    return await this.notaService.asignarNota(createNotaDto);
   }
 
   @Get()
-  findAll() {
-    return this.notaService.findAll();
+  async findAll() {
+    return await this.notaService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.notaService.findOne(+id);
+  @Get(':materia/:trimestre')
+  findOne(
+    @Param('materia') materia: string,
+    @Param('trimestre') trimestre: number
+  ) {
+    return this.notaService.findOne(materia, trimestre);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNotaDto: UpdateNotaDto) {
-    return this.notaService.update(+id, updateNotaDto);
+  @Patch(':materia/:trimestre')
+  update(
+    @Param('materia') materia: string,
+    @Param('trimestre') trimestre: number, @Body() updateNotaDto: UpdateNotaDto) {
+    return this.notaService.update(materia, trimestre, updateNotaDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.notaService.remove(+id);
+  @Delete(':materia/:trimestre')
+  remove(
+    @Param('materia') materia: string,
+    @Param('trimestre') trimestre: number) {
+    return this.notaService.remove(materia, trimestre);
   }
 }
