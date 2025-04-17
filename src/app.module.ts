@@ -24,6 +24,7 @@ import { AlumnoModule } from './alumno/alumno.module';
   imports: [
     ConfigModule.forRoot({
       expandVariables: true,
+      isGlobal: true
     }),
     TypeOrmModule.forRoot({
       type: "mysql",
@@ -33,7 +34,7 @@ import { AlumnoModule } from './alumno/alumno.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       autoLoadEntities: true,
-      synchronize: false, // cuando necesite sincronizar colocar en true mejor usar migraciones(?)
+      synchronize: false,
       logging: true,
     }),
     AlumnoModule,

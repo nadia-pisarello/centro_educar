@@ -5,8 +5,6 @@ import { Persona } from './entities/persona.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { error } from 'console';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class PersonaService {
