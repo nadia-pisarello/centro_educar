@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateNotaDto {
@@ -8,9 +9,11 @@ export class CreateNotaDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     trimestre: number
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     nota: number
 }

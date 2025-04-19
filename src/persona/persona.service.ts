@@ -5,6 +5,7 @@ import { Persona } from './entities/persona.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ReadPersonaDto } from './dto/read-persona.dto';
 
 @Injectable()
 export class PersonaService {
@@ -28,12 +29,12 @@ export class PersonaService {
     return await this.personaRepository.save(nuevaPersona);
   }
 
-  async findAll(): Promise<UpdatePersonaDto[]> {
+  async findAll(): Promise<ReadPersonaDto[]> {
     const usuarios = await this.personaRepository.find()
-    return usuarios.map(({ password, ...data }) => data as UpdatePersonaDto)
+    return usuarios.map(({ password, ...data }) => data as ReadPersonaDto)
   }
 
-  async findOne(dni: string): Promise<UpdatePersonaDto> {
+  async findOne(dni: string): Promise<ReadPersonaDto> {
     const usuario = await this.personaRepository.findOne({ where: { dni } })
     if (!usuario) {
       throw new NotFoundException('El usuario no existe')

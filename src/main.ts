@@ -4,12 +4,13 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api/v1')
   // app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // Remueve propiedades no definidas en los DTOs
-      forbidNonWhitelisted: true, // Lanza error si hay propiedades no permitidas
-      transform: true // Convierte tipos automáticamente (por ejemplo, strings a números)
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true
     }),
   );
   // const port = process.env.PORT

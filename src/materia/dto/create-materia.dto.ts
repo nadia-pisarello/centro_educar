@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { Type } from "class-transformer";
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateMateriaDto {
 
@@ -6,9 +7,11 @@ export class CreateMateriaDto {
     nombre_materia: string
 
     @IsNotEmpty()
+    @IsString()
     nombre_nivel: string
 
     @IsOptional()
     @IsNumber()
+    @Type(() => Number)
     nota_final: number
 }

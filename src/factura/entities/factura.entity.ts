@@ -10,6 +10,9 @@ export class Factura {
     @PrimaryColumn()
     numero: number
 
+    @Column()
+    dni_alumno: string
+
     @Column({ type: 'date' })
     fecha_emision: string
 

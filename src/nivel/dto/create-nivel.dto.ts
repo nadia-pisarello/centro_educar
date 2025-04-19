@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import { IsIn, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateNivelDto {
@@ -8,5 +9,6 @@ export class CreateNivelDto {
     nivel: string
 
     @IsNumber()
+    @Type(() => Number)
     plan_de_estudio: number
 }

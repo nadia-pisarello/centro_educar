@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsDateString, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateFacturaDto {
 
@@ -8,11 +9,14 @@ export class CreateFacturaDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     numero: number
 
-    @IsNumber()
+    @IsNotEmpty()
+    @IsString()
     dni_alumno: string
 
     @IsNotEmpty()
+    @IsDateString()
     fecha_emision: string
 }

@@ -25,30 +25,46 @@ export class FacturaService {
   }
 
   async findAll(): Promise<Factura[]> {
-    return await this.facturaRepository.find();
+    return await this.facturaRepository.find({ relations: ['alumno'] });
   }
 
-  async findOne(tipo: string, numero: number): Promise<Factura> {
-    const factura = await this.facturaRepository.findOneBy({ tipo, numero })
+  async obtenerFacturasPorDniAlumno(dni_alumno: string): Promise<Factura[]> {
+    return await this.facturaRepository.find({
+      where: {
+        alumno: { dni_alumno }
+      },
+      relations: ['alumno']
+    });
+  }
+
+  async findOne(tipo: string, numero: number, dni_alumno: string): Promise<Factura> {
+    const factura = await this.facturaRepository.findOne({
+      where: {
+        tipo, numero, alumno: { dni_alumno }
+      },
+      relations: ['alumno']
+    })
     if (!factura) {
-      throw new NotFoundException('Factura no encontrada')
+      throw new NotFoundException('Factura no encontrada o no pertenece al alumno')
     }
     return factura;
   }
 
   async update(tipo: string, numero: number, updateFacturaDto: UpdateFacturaDto): Promise<void> {
-    const factura = await this.facturaRepository.findOneBy({ tipo, numero })
-    if (!factura) {
-      throw new NotFoundException('Factura no encontrada')
-    }
+    await this.verificarExistenciaFactura(tipo, numero)
     await this.facturaRepository.update({ tipo, numero }, updateFacturaDto);
   }
 
   async remove(tipo: string, numero: number): Promise<void> {
+    await this.verificarExistenciaFactura(tipo, numero)
+    await this.facturaRepository.delete({ tipo, numero });
+  }
+
+  private async verificarExistenciaFactura(tipo: string, numero: number) {
     const factura = await this.facturaRepository.findOneBy({ tipo, numero })
     if (!factura) {
       throw new NotFoundException('Factura no encontrada')
     }
-    await this.facturaRepository.delete({ tipo, numero });
+    return factura
   }
 }

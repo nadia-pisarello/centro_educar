@@ -14,16 +14,20 @@ export class AuthService {
     ) { }
 
     async signIn(usuario: string, pass: string): Promise<{ token: string }> {
-        const user =
-            await this.personaRepo.findOneBy({ email: usuario }) ??
-            await this.personaRepo.findOneBy({ nombre_usuario: usuario })
+        const user = await this.personaRepo.findOne({
+            where: [
+                { email: usuario },
+                { nombre_usuario: usuario }],
+            relations: ['roles'],
+        })
         if (!user || !(await bcrypt.compare(pass, user.password))) {
             throw new UnauthorizedException('Usuario o contraseña incorrectos');
         }
         const payload = {
             sub: user.dni,
-            username: usuario,
-            nombreCompleto: `${user.nombre} ${user.apellido}`
+            username: user.email ?? user.nombre_usuario,
+            nombreCompleto: `${user.nombre} ${user.apellido}`,
+            roles: user.roles.map(rol => rol.rol)
         }
 
         return { token: await this.jwtService.signAsync(payload) }
