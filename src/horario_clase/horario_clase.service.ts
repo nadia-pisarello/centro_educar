@@ -35,7 +35,7 @@ export class HorarioClaseService {
     if (horario) {
       throw new BadRequestException('Horario ya existe')
     }
-    const nuevoHorario = this.horarioRepository.create(horario)
+    const nuevoHorario = this.horarioRepository.create(createHorarioClaseDto)
     return await this.horarioRepository.save(nuevoHorario);
   }
 
@@ -43,10 +43,8 @@ export class HorarioClaseService {
     return await this.horarioRepository.find();
   }
 
-  async findOne(nombre_materia: string, nombre_aula: string): Promise<HorarioClase> {
-    const horario = await this.horarioRepository.findOneBy({
-      nombre_materia, nombre_aula
-    })
+  async findOneMateria(nombre_materia: string): Promise<HorarioClase> {
+    const horario = await this.horarioRepository.findOneBy({ nombre_materia })
     if (!horario) {
       throw new NotFoundException('Horario no encontrado')
     }
@@ -57,7 +55,7 @@ export class HorarioClaseService {
     const horario = await this.horarioRepository.findOneBy({
       nombre_materia, nombre_aula
     })
-    if (horario) {
+    if (!horario) {
       throw new NotFoundException('Horario no encontrado')
     }
     this.horarioRepository.delete({ nombre_materia, nombre_aula });

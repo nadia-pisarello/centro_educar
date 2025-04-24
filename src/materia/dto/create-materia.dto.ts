@@ -4,6 +4,7 @@ import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 export class CreateMateriaDto {
 
     @IsNotEmpty()
+    @IsString()
     nombre_materia: string
 
     @IsNotEmpty()
