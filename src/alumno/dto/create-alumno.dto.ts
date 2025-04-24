@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateAlumnoDto {
@@ -8,8 +9,10 @@ export class CreateAlumnoDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     legajo: number
 
     @IsOptional()
+    @IsString()
     nivel: string
 }
