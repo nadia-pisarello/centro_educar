@@ -12,7 +12,7 @@ export class MateriaController {
     return await this.materiaService.create(createMateriaDto);
   }
 
-  @Get()
+  @Get('materias')
   async findAll() {
     return await this.materiaService.findAll();
   }

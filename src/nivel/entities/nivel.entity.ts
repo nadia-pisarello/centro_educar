@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Alumno } from "src/alumno/entities/alumno.entity";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('nivel')
 export class Nivel {
@@ -8,4 +9,7 @@ export class Nivel {
 
     @Column()
     plan_de_estudio: number
+
+    @OneToMany(() => Alumno, alumno => alumno.nivel)
+    alumnos: Alumno[]
 }

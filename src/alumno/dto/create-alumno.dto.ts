@@ -15,4 +15,9 @@ export class CreateAlumnoDto {
     @IsOptional()
     @IsString()
     nivel: string
+
+    @IsNotEmpty()
+    @IsString()
+    estado_actividad: string
+
 }

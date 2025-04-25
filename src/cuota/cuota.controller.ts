@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CuotaService } from './cuota.service';
 import { CreateCuotaDto } from './dto/create-cuota.dto';
 import { UpdateCuotaDto } from './dto/update-cuota.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('cuota')
+@UseGuards(AuthGuard, RolesGuard)
 export class CuotaController {
   constructor(private readonly cuotaService: CuotaService) { }
 
   @Post()
+
   create(@Body() createCuotaDto: CreateCuotaDto) {
     return this.cuotaService.create(createCuotaDto);
   }

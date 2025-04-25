@@ -10,13 +10,17 @@ export class Cuota {
     @PrimaryColumn()
     dni_alumno: string
 
+    @Column({ type: "double" })
+    monto: number
+
+    @Column({ type: 'date' })
+    vencimiento: string
+
+    @Column()
+    estado_de_pago: string
+
     @ManyToOne(() => Alumno, (alumno) => alumno.dni_alumno)
     @JoinColumn({ name: 'dni_alumno' })
     alumno: Alumno
 
-    @Column({ type: "double" })
-    monto: number
-
-    @Column()
-    estado_de_pago: string
 }

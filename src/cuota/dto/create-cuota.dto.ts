@@ -1,9 +1,11 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsDateString, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateCuotaDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     nro_cuota: number
 
     @IsNotEmpty()
@@ -12,7 +14,12 @@ export class CreateCuotaDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     monto: number
+
+    @IsNotEmpty()
+    @IsDateString()
+    vencimiento: string
 
     @IsNotEmpty()
     @IsString()

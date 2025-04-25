@@ -4,6 +4,7 @@ import { UpdateNivelDto } from './dto/update-nivel.dto';
 import { Nivel } from './entities/nivel.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Alumno } from 'src/alumno/entities/alumno.entity';
 
 @Injectable()
 export class NivelService {
@@ -31,6 +32,17 @@ export class NivelService {
       throw new NotFoundException('No existe ese nivel')
     }
     return nivelEncontrado;
+  }
+
+  async findAlumnosPorNivel(nombre_nivel: string): Promise<Nivel> {
+    const nivel = await this.nivelRepository.findOne({
+      where: { nivel: nombre_nivel },
+      relations: ['alumnos']
+    })
+    if (!nivel) {
+      throw new NotFoundException('Nivel no encontrado')
+    }
+    return nivel
   }
 
   async update(nombre_nivel: string, updateNivelDto: UpdateNivelDto): Promise<void> {
