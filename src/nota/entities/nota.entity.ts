@@ -14,7 +14,7 @@ export class Nota {
     nota: number
 
     @OneToOne(() => Materia, (materia) => materia.nombre_materia)
-    @JoinColumn({ name: 'nombre_materia' })
+    @JoinColumn({ name: 'nombre_materia', referencedColumnName: 'nombre_materia' })
     materia: Materia
 
 

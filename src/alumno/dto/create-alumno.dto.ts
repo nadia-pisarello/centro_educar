@@ -14,7 +14,7 @@ export class CreateAlumnoDto {
 
     @IsOptional()
     @IsString()
-    nivel: string
+    nombre_nivel?: string
 
     @IsNotEmpty()
     @IsString()

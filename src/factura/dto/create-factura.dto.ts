@@ -17,6 +17,11 @@ export class CreateFacturaDto {
     dni_alumno: string
 
     @IsNotEmpty()
+    @IsNumber()
+    @Type(() => Number)
+    legajo_alumno: number
+
+    @IsNotEmpty()
     @IsDateString()
     fecha_emision: string
 }

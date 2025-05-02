@@ -12,10 +12,10 @@ export class PersonaRol {
     id_rol: number
 
     @ManyToOne(() => Persona, (persona) => persona.roles)
-    @JoinColumn({ name: 'dni_persona' })
+    @JoinColumn({ name: 'dni_persona', referencedColumnName: 'dni' })
     persona: Persona
 
     @ManyToOne(() => Rol, (rol) => rol.personas)
-    @JoinColumn({ name: 'id_rol' })
+    @JoinColumn({ name: 'id_rol', referencedColumnName: 'id_rol' })
     rol: Rol
 }

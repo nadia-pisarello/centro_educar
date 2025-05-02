@@ -3,6 +3,7 @@ import { PersonaService } from './persona.service';
 import { PersonaController } from './persona.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Persona } from './entities/persona.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Persona])],

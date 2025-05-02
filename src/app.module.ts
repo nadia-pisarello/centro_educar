@@ -19,6 +19,7 @@ import { PersonaModule } from './persona/persona.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AlumnoModule } from './alumno/alumno.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -34,7 +35,7 @@ import { AlumnoModule } from './alumno/alumno.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
       logging: true,
     }),
     AlumnoModule,
@@ -52,7 +53,8 @@ import { AlumnoModule } from './alumno/alumno.module';
     RolModule,
     PersonaRolModule,
     PersonaModule,
-    AsistenciaModule],
+    AsistenciaModule,
+    AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

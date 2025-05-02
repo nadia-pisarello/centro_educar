@@ -20,7 +20,10 @@ export class Cuota {
     estado_de_pago: string
 
     @ManyToOne(() => Alumno, (alumno) => alumno.dni_alumno)
-    @JoinColumn({ name: 'dni_alumno' })
+    @JoinColumn([
+        { name: 'dni_alumno', referencedColumnName: 'dni_alumno' },
+        { name: 'legajo_alumno', referencedColumnName: 'legajo' }
+    ])
     alumno: Alumno
 
 }

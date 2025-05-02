@@ -15,6 +15,9 @@ export class Alumno {
     @Column()
     estado_actividad: string
 
+    @Column()
+    nombre_nivel: string
+
     @OneToOne(() => Persona)
     @JoinColumn({ name: 'dni_alumno', referencedColumnName: 'dni' })
     persona: Persona
@@ -23,6 +26,6 @@ export class Alumno {
     facturas: Factura[]
 
     @ManyToOne(() => Nivel, nivel => nivel.alumnos)
-    @JoinColumn({ name: 'nivel' })
+    @JoinColumn({ name: 'nombre_nivel', referencedColumnName: 'nivel' })
     nivel: Nivel
 }

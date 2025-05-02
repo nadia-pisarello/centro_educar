@@ -8,7 +8,10 @@ export class Asistencia {
     legajo_alumno: number
 
     @ManyToOne(() => Alumno, (alumno) => alumno.legajo)
-    @JoinColumn({ name: 'legajo_alumno' })
+    @JoinColumn([
+        { name: 'dni_alumno', referencedColumnName: 'dni_alumno' },
+        { name: 'legajo_alumno', referencedColumnName: 'legajo' }
+    ])
     alumno: Alumno
 
     @PrimaryColumn()

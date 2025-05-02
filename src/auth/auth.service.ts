@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { buildPayload } from './payload-builder';
-import { CreatePersonaDto } from 'src/persona/dto/create-persona.dto';
 
 @Injectable()
 export class AuthService {

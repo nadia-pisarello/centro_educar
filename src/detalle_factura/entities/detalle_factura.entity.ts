@@ -22,10 +22,13 @@ export class DetalleFactura {
     precio_unitario: number
 
     @ManyToOne(() => Factura)
-    @JoinColumn([{ name: 'nro_factura', referencedColumnName: 'numero' }, { name: 'tipo_factura', referencedColumnName: 'tipo' }])
+    @JoinColumn([
+        { name: 'tipo_factura', referencedColumnName: 'tipo' },
+        { name: 'nro_factura', referencedColumnName: 'numero' },
+    ])
     factura: Factura
 
     @ManyToOne(() => Cuota)
-    @JoinColumn({ name: 'nro_cuota' })
+    @JoinColumn({ name: 'nro_cuota', referencedColumnName: 'nro_cuota' })
     cuota: Cuota
 }

@@ -9,15 +9,15 @@ export class HorarioClase {
     @PrimaryColumn()
     nombre_materia: string
 
-    @ManyToOne(() => Materia, (materia) => materia.nombre_materia)
-    @JoinColumn({ name: 'nombre_materia' })
-    materia: Materia
-
     @PrimaryColumn()
     nombre_aula: string
 
+    @ManyToOne(() => Materia, (materia) => materia.nombre_materia)
+    @JoinColumn({ name: 'nombre_materia', referencedColumnName: 'nombre_materia' })
+    materia: Materia
+
     @ManyToOne(() => Aula, (aula) => aula.nombre)
-    @JoinColumn({ name: 'nombre_aula' })
+    @JoinColumn({ name: 'nombre_aula', referencedColumnName: 'nombre' })
     aula: Aula
 
     @PrimaryColumn()

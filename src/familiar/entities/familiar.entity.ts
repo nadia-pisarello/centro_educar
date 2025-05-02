@@ -11,6 +11,6 @@ export class Familiar {
     parentesco: string
 
     @ManyToOne(() => Persona, (persona) => persona.dni)
-    @JoinColumn({ name: 'dni_familiar' })
+    @JoinColumn({ name: 'dni_familiar', referencedColumnName: 'dni' })
     persona: Persona
 }
