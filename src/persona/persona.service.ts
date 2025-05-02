@@ -16,9 +16,17 @@ export class PersonaService {
   ) { }
 
   async create(createPersonaDto: CreatePersonaDto): Promise<Persona> {
-    const existe = await this.personaRepository.findOne({ where: { dni: createPersonaDto.dni } })
-    if (existe) {
+    const existeDni = await this.personaRepository.findOne({ where: { dni: createPersonaDto.dni } })
+    if (existeDni) {
       throw new BadRequestException('Este dni ya está siendo ocupado')
+    }
+    const existeEmail = await this.personaRepository.findOne({ where: { email: createPersonaDto.email } })
+    if (existeEmail) {
+      throw new BadRequestException('Este email ya está siendo ocupado')
+    }
+    const existeNombreUsuario = await this.personaRepository.findOne({ where: { nombre_usuario: createPersonaDto.nombre_usuario } })
+    if (existeNombreUsuario) {
+      throw new BadRequestException('Este nombre de usuario ya está siendo ocupado')
     }
     const { password, ...data } = createPersonaDto
     const hashedPassword = await bcrypt.hash(password, 10)

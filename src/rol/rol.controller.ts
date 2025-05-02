@@ -1,9 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ConflictException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ConflictException, UseGuards } from '@nestjs/common';
 import { RolService } from './rol.service';
 import { CreateRolDto } from './dto/create-rol.dto';
 import { UpdateRolDto } from './dto/update-rol.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
 @Controller('rol')
+@UseGuards(AuthGuard, RolesGuard)
+@Roles('Admin')
 export class RolController {
 
   constructor(private readonly rolService: RolService) { }
